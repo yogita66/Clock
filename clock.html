@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .clock_sec{
+            background: #61b2a7;
+            background-image: url('./images/bg.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 50px 0;
+        }
+        .clock_box{
+            width: 180px;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            border: 8px solid #fff;
+            margin: 0 auto;
+            position: relative;
+        }
+        .clock_box::after{
+            content: "";
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 16px;aspect-ratio: 1/1; 
+            background: #fff;
+            border-radius: 50%;
+        }
+        .clock_h{
+             position: absolute; 
+             transform-origin: 50% 100%;
+             padding: 25% 4px 0;
+             background: #fff;
+             border-radius: 20%;
+             /* top: 25%;left: 48%; */
+             top: 50%; left: 50%; 
+             margin: -25% -4px 0;
+        }
+         .clock_m{
+            position: absolute; 
+            transform-origin: 50% 100%;
+            padding: 40% 3px 0;
+            background: #fff;
+            border-radius: 20%;
+            /* top: 10%; left: 48%; */
+            top: 50%; left: 50%; 
+            margin: -40% -3px 0;
+        }
+        .clock_s{
+            position: absolute; 
+            transform-origin: 50% 100%;
+            padding: 40% 1px 0;
+            background: #fff;
+            border-radius: 20%;
+            /* top: 10%; left: 50%;  */
+            transform: rotate(45deg);
+            top: 50%; left: 50%; 
+            margin: -40% -1px 0;
+        } 
+    </style>
+</head>
+<body>
+    
+        <!-- clock  -->
+        <div class="clock_sec">
+            <div class="wrapper afclr">
+                <div class="clock_inner">
+                    <div class="clock_box">
+                        <div class="clock_h"></div>
+                        <div class="clock_m"></div>
+                        <div class="clock_s"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="js/jquery-3.7.0.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script>
+            let time =new Date();
+            // 360(deg)/60(sec)=6
+            // 360(deg)/12(hours)=30
+            let sec =time.getSeconds()*6, min= time.getMinutes()*6, hour=time.getHours()*30;
+            $('.clock_h').css("transform", `rotate(${hour}deg)`);
+            $('.clock_m').css("transform", `rotate(${min}deg)`);
+            $('.clock_s').css("transform", `rotate(${sec}deg)`);
+            setInterval(function () { 
+                sec += 6;
+                
+                if(sec%10 == 0){
+                    min += 1;
+                    if(min%12 == 0){
+                        hour += 1;
+                    }
+                }
+
+                if(sec == 360){sec=0}
+                if(min == 360){min =0}
+                if(hour == 360){hour =0}
+
+                $('.clock_h').css("transform", `rotate(${hour}deg)`);
+                $('.clock_m').css("transform", `rotate(${min}deg)`);
+                $('.clock_s').css("transform", `rotate(${sec}deg)`);
+                }, 1000);
+        </script>
+</body>
+</html>
